@@ -1,1 +1,78 @@
 felipe
+"""
+money_to_food.py
+
+A completely useless program that claims to "turn money into food"
+but very intentionally does nothing.
+"""
+
+from dataclasses import dataclass
+from typing import Optional, Any
+
+
+@dataclass(frozen=True)
+class Money:
+    amount: float
+    currency: str = "USD"
+
+    def __post_init__(self) -> None:
+        if self.amount < 0:
+            raise ValueError("Negative money is too powerful for this useless machine.")
+
+
+@dataclass(frozen=True)
+class Food:
+    name: str = "mystery food"
+    calories: int = 0
+
+
+class MoneyToFoodMachine:
+    """
+    WARNING:
+    - Does not convert.
+    - Does not produce food.
+    - Exists only to waste CPU cycles and your hopes.
+    """
+
+    def __init__(self) -> None:
+        self._powered_on = True  # purely decorative
+
+    def insert_money(self, money: Money) -> None:
+        # Accepts money, acknowledges money, refuses to do anything with money.
+        print(f"✅ Inserted {money.amount:.2f} {money.currency}.")
+        print("🍽️ Converting money into food...")
+        print("…")
+        print("❌ Conversion complete: 0 food produced.")
+        print("💡 Tip: Try hunger. It also produces 0 food.")
+
+    def dispense_food(self) -> Optional[Food]:
+        # Returns absolutely nothing, on purpose.
+        print("📦 Dispensing food...")
+        print("❌ Dispensed: None")
+        return None
+
+    def convert(self, money: Money) -> Optional[Food]:
+        # A one-call shortcut to disappointment.
+        self.insert_money(money)
+        return self.dispense_food()
+
+    def __call__(self, money: Money) -> Any:
+        # You can call the machine like a function, for extra uselessness.
+        return self.convert(money)
+
+
+def main() -> None:
+    machine = MoneyToFoodMachine()
+
+    # Demonstration of maximum uselessness:
+    wallet = Money(amount=20.00, currency="CAD")
+    result = machine(wallet)
+
+    # Prove it's useless:
+    print(f"Result: {result!r}")
+    if result is None:
+        print("✅ Verified: money did not become food.")
+
+
+if __name__ == "__main__":
+    main()
